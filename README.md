@@ -1,4 +1,4 @@
-#VERCEL LIVE LINKS OF LUXELOOK ECOMMERCE WEBSITE
+# VERCEL LIVE LINKS OF LUXELOOK ECOMMERCE WEBSITE
 
 LuxeLook Frontend Website Link => "https://luxelook-frontend.vercel.app"
 
