@@ -18,7 +18,7 @@ const razorpayInstance = new razorpay({
 
 
 
-//1)PLACING ORDERS USING CASH ON DELIVERY
+//1)PLACING ORDERS USING CASH ON DELIVERY (FRONTEND)
 const placeOrder = async (req, res) => {
     try {
         const { userId, items, amount, address } = req.body;
@@ -47,7 +47,7 @@ const placeOrder = async (req, res) => {
 
 
 
-//2)PLACING ORDERS USING STRIPE
+//2)PLACING ORDERS USING STRIPE (FRONTEND)
 const placeOrderStripe = async (req, res) => {
     try {
         const { userId, items, amount, address } = req.body;
@@ -102,7 +102,7 @@ const placeOrderStripe = async (req, res) => {
     }
 }
 
-//3)VERIFY STRIPE
+//3)VERIFY STRIPE (FRONTEND)
 const verifyStripe = async (req, res) => {
     const { orderId, success, userId } = req.body;
     try {
@@ -123,7 +123,7 @@ const verifyStripe = async (req, res) => {
 
 
 
-//4)PLACING ORDERS USING RAZORPAY
+//4)PLACING ORDERS USING RAZORPAY (FRONTEND)
 const placeOrderRazorpay = async (req, res) => {
     try {
         const { userId, items, amount, address } = req.body;
@@ -160,7 +160,7 @@ const placeOrderRazorpay = async (req, res) => {
 
 }
 
-//VERIFY RAZORPAY
+//5)VERIFY RAZORPAY (FRONTEND)
 const verifyRazorpay = async (req, res) => {
     try {
         const { userId, razorpay_order_id } = req.body;
@@ -181,20 +181,8 @@ const verifyRazorpay = async (req, res) => {
     }
 }
 
-//4)DISPLAY ALL ORDERS DATA FOR ADMIN PANEL
-const allOrders = async (req, res) => {
-    try {
-        const orders = await orderModel.find({});
-        res.json({ success: true, orders });
-    }
-    catch (error) {
-        console.log(error);
-        res.json({ success: false, message: error.message });
-    }
-}
 
-
-//5)DISPLAY ALL ORDERS FOR A PARTICULAR USER IN FRONTEND
+//6)DISPLAY ALL ORDERS FOR A PARTICULAR USER IN FRONTEND (FRONTEND)
 const userOrders = async (req, res) => {
     try {
         const { userId } = req.body;
@@ -208,7 +196,20 @@ const userOrders = async (req, res) => {
 }
 
 
-//6)UPDATE ORDER STATUS FROM ADMIN PANEL
+//7)DISPLAY ALL ORDERS DATA FOR ADMIN PANEL (ADMIN)
+const allOrders = async (req, res) => {
+    try {
+        const orders = await orderModel.find({});
+        res.json({ success: true, orders });
+    }
+    catch (error) {
+        console.log(error);
+        res.json({ success: false, message: error.message });
+    }
+}
+
+
+//8)UPDATE ORDER STATUS FROM ADMIN PANEL (ADMIN)
 const updateStatus = async (req, res) => {
     try {
         const { orderId, status } = req.body;

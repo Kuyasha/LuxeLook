@@ -18,7 +18,7 @@ connectCloudinary();
 
 //Middlewares
 app.use(express.json()); //After providing this whatever req we get that will be passed using json
-app.use(cors());
+app.use(cors());//after adding this,we can access the backend from any id
 
 
 //API Endpoints

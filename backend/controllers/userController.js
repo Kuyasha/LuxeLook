@@ -11,35 +11,7 @@ const createToken = (id) => {
 }
 
 
-//Route for user login
-const loginUser = async(req,res) => {
-    try{
-        const {email, password} = req.body;
-        const user = await userModel.findOne({email}); //find user
-        if(!user){
-            return res.json({success:false, message:"User doesn't exists"}); 
-        }
-
-        //pass entered by user for login is compared with the hashed pass saved
-        //at mongodb database
-        const isMatch = await bcrypt.compare(password, user.password);
-        if(isMatch){
-            const token = createToken(user._id);
-            res.json({success:true, token})
-        }
-        else{
-            res.json({success:false, message:"Invalid credentials"});
-        }
-    }
-    catch(error){
-        console.log(error);
-        res.json({success:false, message:error.message}); 
-    }
-}
-
-
-
-//Route for user registration
+//1)USER REGISTRATION (FRONTEND)
 const registerUser = async(req,res) => {
     try{
         const {name, email, password} = req.body;
@@ -80,8 +52,35 @@ const registerUser = async(req,res) => {
 }
 
 
+//2)USER LOGIN (FRONTEND)
+const loginUser = async(req,res) => {
+    try{
+        const {email, password} = req.body;
+        const user = await userModel.findOne({email}); //find user
+        if(!user){
+            return res.json({success:false, message:"User doesn't exists"}); 
+        }
 
-//Route for admin login
+        //pass entered by user for login is compared with the hashed pass saved
+        //at mongodb database
+        const isMatch = await bcrypt.compare(password, user.password);
+        if(isMatch){
+            const token = createToken(user._id);
+            res.json({success:true, token})
+        }
+        else{
+            res.json({success:false, message:"Invalid credentials"});
+        }
+    }
+    catch(error){
+        console.log(error);
+        res.json({success:false, message:error.message}); 
+    }
+}
+
+
+
+//3)ADMIN LOGIN (ADMIN PANEL)
 const adminLogin = async(req,res) => {
     try{
         const {email, password} = req.body; //email=>admin-email, pass=>admin-pass

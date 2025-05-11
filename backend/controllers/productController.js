@@ -3,12 +3,12 @@ import productModel from "../models/productModel.js";
 
 
 
-//ADD PRODUCT
+//1)ADD PRODUCT (For ADMIN PANEL)
 const addProduct = async(req, res) =>{
     try{
         const {name,description,price,category,subCategory,sizes,bestseller} = req.body;
         
-        //req.files.image1 && req.files.image1[0] => if image1 is available then
+    //req.files.image1 && req.files.image1[0] => if image1 is available then
     //we will store that inside image1 variable,if not available then we will not get any error
         const image1 = req.files.image1 && req.files.image1[0]; 
         const image2 = req.files.image2 && req.files.image2[0];
@@ -50,22 +50,7 @@ const addProduct = async(req, res) =>{
 }
 
 
-
-//GET LIST OF PRODUCTS
-const listProducts = async(req, res) =>{
-    try{
-        const products = await productModel.find({});
-        res.json({success:true, products});
-    }
-    catch(error){
-        console.log(error);
-        res.json({success:false, message:error.message});
-    }  
-}
-
-
-
-//REMOVING PRODUCT
+//2)REMOVING PRODUCT (For ADMIN PANEL)
 const removeProduct = async(req, res) =>{
     try{
         await productModel.findByIdAndDelete(req.body.id);
@@ -75,6 +60,19 @@ const removeProduct = async(req, res) =>{
         console.log(error);
         res.json({success:false, message:error.message});
     }    
+}
+
+
+//3)GET LIST OF PRODUCTS
+const listProducts = async(req, res) =>{
+    try{
+        const products = await productModel.find({});
+        res.json({success:true, products});
+    }
+    catch(error){
+        console.log(error);
+        res.json({success:false, message:error.message});
+    }  
 }
 
 

@@ -8,6 +8,8 @@ const userSchema = new mongoose.Schema({
     
 }, {minimize:false});
 
+//When the userModel is already available then that model will be used, if 
+//userModel is not available then new model will be created
 const userModel = mongoose.models.user || mongoose.model('user', userSchema);
 
 export default userModel;
