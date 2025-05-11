@@ -2,22 +2,27 @@ import {v2 as cloudinary} from "cloudinary";
 import productModel from "../models/productModel.js";
 
 
-
 //1)ADD PRODUCT (For ADMIN PANEL)
 const addProduct = async(req, res) =>{
     try{
+        //i)Get Product Details
         const {name,description,price,category,subCategory,sizes,bestseller} = req.body;
         
-    //req.files.image1 && req.files.image1[0] => if image1 is available then
-    //we will store that inside image1 variable,if not available then we will not get any error
-        const image1 = req.files.image1 && req.files.image1[0]; 
+        //ii)Get Product Images
+        //req.files.image1 && req.files.image1[0] => if image1 is available then
+        //we will store that inside image1 variable,if not available then also we
+        //will not get any error
+        const image1 = req.files.image1 && req.files.image1[0];//image1 is an array,and we have to get the first element as image1[0] 
         const image2 = req.files.image2 && req.files.image2[0];
         const image3 = req.files.image3 && req.files.image3[0];
-        const image4 = req.files.image4 && req.files.image4[0];   
-        //if the item =! undefined,then we will store that item inside images array
+        const image4 = req.files.image4 && req.files.image4[0];
+
+        //iii)If the item =! undefined,then we will store that item inside images array
         const images = [image1,image2,image3,image4].filter((item) => item !== undefined);
         
-    //Storing all the images inside cloudinary database
+        //iv)Storing all the images of "images" arr at cloudinary 
+        //we can't directly store these images at mongodb,first have to store this
+        //at cloudinary and then get imageUrl from cloudinary and save that url at mongodb
         let imagesUrl = await Promise.all(
             images.map(async (item) => {
                 let result = await cloudinary.uploader.upload(item.path, {resource_type:'image'});
@@ -25,7 +30,7 @@ const addProduct = async(req, res) =>{
             })
         );
 
-    //Save all these datas inside mongodb database //bestseller==="true" ? true : false,
+        //v)Save all these data's inside mongodb database
         const productData = {
             name,
             description,
@@ -34,12 +39,12 @@ const addProduct = async(req, res) =>{
             category,
             subCategory,
             sizes: JSON.parse(sizes),
-            bestseller: bestseller === 'true' ? true : false,
+            bestseller: bestseller === 'true' ? true : false,//from the form we get bestseller as string,we have to convert it to boolean
             date: Date.now()
         } 
         const product = new productModel(productData);
         await product.save();
-        console.log(product);
+        //console.log(product);
         
         res.json({success:true, message:"Product Added"});
     }
@@ -50,7 +55,7 @@ const addProduct = async(req, res) =>{
 }
 
 
-//2)REMOVING PRODUCT (For ADMIN PANEL)
+//2)REMOVE PRODUCT (For ADMIN PANEL)
 const removeProduct = async(req, res) =>{
     try{
         await productModel.findByIdAndDelete(req.body.id);
@@ -77,7 +82,7 @@ const listProducts = async(req, res) =>{
 
 
 
-//GET SINGLE PRODUCT INFORMATION
+//4)GET SINGLE PRODUCT INFORMATION
 const singleProduct = async(req, res) =>{
     try{
         const {productId} = req.body;
