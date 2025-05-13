@@ -2,13 +2,19 @@ import userModel from "../models/userModel.js";
 
 
 //1)ADD PRODUCTS TO USER CART
-const addToCart = async(req,res) =>{
+const addToCart = async(req,res) => {
     try{
-        const {userId, itemId, size} = req.body; //itemId=>pdtId that we are trying to add in the cart
-        const userData = await userModel.findById(userId);
-        let cartData = await userData.cartData;//extracting cartData using userData of that user
+        //i)Extract userId,productId=itemId and productSize from body
+        //itemId=>id of the product that we are trying to add in the cart
+        const {userId, itemId, size} = req.body;
         
-        if(cartData[itemId]){ //if cartData has this itemId available
+        //ii)Find that user from the userModel using this userId and
+        //extract cartData of that user
+        const userData = await userModel.findById(userId);
+        let cartData = await userData.cartData;
+
+        //iii)Modify cartData of the user by adding itemId and size
+        if(cartData[itemId]){ //when pdt/item is already available in this cartData
             if(cartData[itemId][size]){ //if itemId of this cartData has this size available
                 cartData[itemId][size] += 1;
             }
@@ -16,12 +22,12 @@ const addToCart = async(req,res) =>{
                 cartData[itemId][size] = 1;  
             }
         }
-        else{ //when cartData of this itemId not available
+        else{ //when we dont have any product in this cartData
             cartData[itemId] = {}; //create new obj of this itemId of cartData
             cartData[itemId][size] = 1; //in that obj create size
         }
 
-        //now add this updated cartData into userData
+        //iv)Add this updated cartData into this userId of database
         await userModel.findByIdAndUpdate(userId, {cartData});
         res.json({success:true, message:"Added To Cart"});
     }
@@ -32,15 +38,22 @@ const addToCart = async(req,res) =>{
 }
 
 
-//2)UPDATE USER CART
+
+//2)UPDATE QUANTITY OF ANY PRODUCT AT USER CART
 const updateCart = async(req,res) =>{
     try{
+        //i)Extract userId,itemId,size,quantity from body
         const {userId, itemId, size, quantity} = req.body;
+
+        //ii)Find that user from the userModel using this userId and
+        //extract cartData of that user
         const userData = await userModel.findById(userId);
-        let cartData = await userData.cartData;//extracting cartData using userData of that user
+        let cartData = await userData.cartData;
 
-        cartData[itemId][size] = quantity; //updating the quantity
+        //iii)Update the quantity inside cartData of that user
+        cartData[itemId][size] = quantity;
 
+        //iv)Add this updated cartData into this userId of database
         await userModel.findByIdAndUpdate(userId, {cartData});
         res.json({success:true, message:"Cart Updated"});
     }
@@ -56,8 +69,8 @@ const getUserCart = async(req,res) =>{
     try{
         const {userId} = req.body;
         const userData = await userModel.findById(userId);
-        let cartData = await userData.cartData;//extracting cartData using userData of that user
-        
+        let cartData = await userData.cartData;
+
         res.json({success:true, cartData});
     }
     catch(error){
