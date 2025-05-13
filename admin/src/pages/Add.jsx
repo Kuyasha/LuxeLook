@@ -41,7 +41,7 @@ const Add = ({token}) =>{
 
             //Now send this formData to the backend api using axios
             const response = await axios.post(backendUrl + "/api/product/add",formData,{headers:{token}});//authentication is there with add pdt so use token
-            console.log(response.data);
+            //console.log(response.data);
 
             //After adding the pdt successfully all the fields should be empty of the form
             if(response.data.success){
@@ -62,6 +62,8 @@ const Add = ({token}) =>{
             toast.error(error.message);
         }
     }
+
+    
 
     return(
         <form onSubmit={onSubmitHandler} className="flex flex-col w-full items-start gap-3">

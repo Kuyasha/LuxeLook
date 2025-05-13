@@ -5,7 +5,8 @@ import {toast} from 'react-toastify';
 
 const List = ({token}) =>{
     const [list,setList] = useState([]);
-
+    
+    //i)To Fetch all the products list
     const fetchList = async() =>{
         try{
             const response = await axios.get(backendUrl + '/api/product/list');
@@ -20,7 +21,8 @@ const List = ({token}) =>{
             toast.error(error.message);
         }
     }
-
+    
+    //ii)To Remove any particular product
     const removeProduct = async(id) =>{
         try{
             const response = await axios.post(backendUrl + '/api/product/remove', {id}, {headers:{token}});
@@ -36,7 +38,8 @@ const List = ({token}) =>{
             toast.error(error.message);
         }
     }
-
+    
+    //iii)To run the fetchList fn whenever the page is reloaded or loaded
     useEffect(()=>{
         fetchList()
     },[]);

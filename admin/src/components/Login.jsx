@@ -4,6 +4,9 @@ import axios from 'axios';
 import { backendUrl } from "../App";
 import { toast } from "react-toastify";
 
+
+//setToken is passed as props from (Login Component inside App.jsx) and
+//destructure it here
 const Login = ({setToken}) =>{
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -13,6 +16,8 @@ const Login = ({setToken}) =>{
             e.preventDefault();
             const response = await axios.post(backendUrl + '/api/user/admin', {email,password}); 
             //console.log(response);
+
+            //token is saved at setToken after login successful
             if(response.data.success){
                 setToken(response.data.token);
             }else{

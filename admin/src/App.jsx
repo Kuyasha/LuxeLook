@@ -9,13 +9,14 @@ import Orders from './pages/Orders';
 import Login from './components/Login';
 import {ToastContainer} from 'react-toastify';
 
-export const backendUrl = import.meta.env.VITE_BACKEND_URL
+export const backendUrl = import.meta.env.VITE_BACKEND_URL //to use it in any component while API calling
 export const currency = '$';
 
 const App = () =>{
     const [token,setToken] = useState(localStorage.getItem('token') ? localStorage.getItem('token') : '');
     
-    //To stop from logged out when reloading the webpage
+    //To stop from logged out when reloading the webpage,
+    //token is saved at localStorage
     useEffect(()=>{
         localStorage.setItem('token', token)
     }, [token]);
@@ -23,7 +24,9 @@ const App = () =>{
     return(
         <div className="bg-gray-50 min-h-screen">
         <ToastContainer />
-         {token === "" ? <Login setToken={setToken}/> :  /* If token is empty string,then Login page will be visible, otherwise all the components will be visible*/ 
+         {/*If token is empty string,then Login page will be visible,
+         otherwise all the components will be visible*/}
+         {token === "" ? <Login setToken={setToken}/> :   
             <>
             <Navbar setToken={setToken}/>
             <hr/>
