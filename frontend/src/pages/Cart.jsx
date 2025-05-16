@@ -10,8 +10,9 @@ const Cart = () => {
     const {products, currency, cartItems, updateQuantity, navigate} = useContext(ShopContext);
     const [cartData, setCartData] = useState([]);
 
-
-    useEffect(()=>{ //creating a new object tempData with id,size,quantity for cart
+    // Here we want to add the cartItems data and products data in one array
+    // creating a new object tempData with id,size,quantity for cart
+    useEffect(()=>{ 
       if(products.length > 0){   
         const tempData = [];
         for(const items in cartItems){

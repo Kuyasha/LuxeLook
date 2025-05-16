@@ -6,15 +6,19 @@ import { useNavigate } from "react-router-dom";
 
 
 const Login = () => {
-    const [currentState, setCurrentState] = useState('Login');
     const {token, setToken, navigate, backendUrl} = useContext(ShopContext);
 
+    //To manage the state like login or signup
+    const [currentState, setCurrentState] = useState('Login');
+    
+    //To save the form-data, these variables are created
     const [name,setName] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
 
 
-    //Send the formdata(name,email,password to backend)
+    // OnSubmitHandler function
+    // Send the formdata(name,email,password to backend)
     const onSubmitHandler = async(event) => {
         event.preventDefault();
         try{
@@ -47,8 +51,8 @@ const Login = () => {
         }
     }
 
-    //After LoggedIn redirect to the Home Page=>if token available navigate
-    // to the home page
+    // After LoggedIn redirect to the Home Page=>if token available at the
+    // localStorage navigate to the home page
     useEffect(()=>{
         if(token){
             navigate('/')

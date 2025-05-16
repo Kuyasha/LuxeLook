@@ -5,10 +5,12 @@ import { useLocation } from "react-router-dom";
 
 const SearchBar = () => {
     const {search, setSearch, showSearch, setShowSearch} = useContext(ShopContext);
-    const location = useLocation();
+    const location = useLocation();//from react-router-dom
     const [visible, setVisible] = useState(false);
     
-    //When on the Collection page, then only show SearchBar
+
+    //When on the Collection page, then only show SearchBar if clicked on 
+    //search-icon of NavBar
     useEffect(()=>{
         //console.log(location.pathname);
         if(location.pathname.includes('collection')){
@@ -27,7 +29,8 @@ const SearchBar = () => {
                 <img src={assets.search_icon} alt="" className="w-4"/>
             </div>
             <img src={assets.cross_icon} onClick={()=>setShowSearch(false)} alt="" className="inline w-3 cursor-pointer"/>
-        </div>) : null
+        </div>
+        ) : null
 }
 
 export default SearchBar;

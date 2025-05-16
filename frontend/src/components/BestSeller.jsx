@@ -9,7 +9,7 @@ const BestSeller = () => {
     const [bestSeller, setBestSeller] = useState([]);
 
     //All bestseller pdts are filtered first; then taking 5 out of all
-    // bestseller pdts using setState
+    // bestseller pdts using slice fn
     useEffect(() => {
         const bestProduct = products.filter((item) => (item.bestseller)); 
         setBestSeller(bestProduct.slice(0,5));

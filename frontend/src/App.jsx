@@ -16,12 +16,13 @@ import { ToastContainer, toast } from 'react-toastify';
 import Verify from './pages/Verify';
 //import 'react-toastify/dist/ReactToastify.css';
 
+
 const App = () => {
     return(
         <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
            <ToastContainer /> 
-            <Navbar/> {/*We want this Navbar,SearchBar to be available to all the pages; */}
-            <SearchBar/> {/*so mention this outside Routes tag */}
+            <Navbar/> {/*We want this Navbar to be available to all the pages; */}
+            <SearchBar/> {/*this SearchBar will be only available to Collection page */}
 
             <Routes>
                 <Route path='/' element={<Home/>} />

@@ -7,7 +7,7 @@ import { assets } from "../assets/assets";
 const Orders = ({ token }) => {
     const [orders, setOrders] = useState([]);
 
-    //To display all orders from admin
+    //i)To fetch all orders and display from admin panel
     const fetchAllOrders = async () => {
         if (!token) {
             return null;
@@ -16,7 +16,7 @@ const Orders = ({ token }) => {
             const response = await axios.post(backendUrl + '/api/order/list', {}, { headers: { token } });
             //console.log(response.data);
             if (response.data.success) {
-                setOrders(response.data.orders.reverse());//revrse()=>used to display latest orders on the top
+                setOrders(response.data.orders.reverse());//reverse()=>used to display latest orders on the top
             }
             else {
                 toast.error(response.data.message);
@@ -28,7 +28,8 @@ const Orders = ({ token }) => {
         }
     }
 
-    //To update status from admin
+
+    //ii)To update status from admin
     const statusHandler = async(event, orderId) =>{
         try{
             const response = await axios.post(backendUrl + '/api/order/status',{orderId,status:event.target.value}, {headers:{token}});
@@ -41,7 +42,8 @@ const Orders = ({ token }) => {
             toast.error(response.data.message);
         }
     }
-
+    
+    //iii)Display all orders on reloading the page
     useEffect(() => {
         fetchAllOrders();
     }, [token]);

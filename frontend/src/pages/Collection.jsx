@@ -7,13 +7,21 @@ import ProductItem from "../components/ProductItem";
 
 const Collection = () => {
     const {products, search, showSearch} = useContext(ShopContext);
+    
+    //to make responsive,to hide filter options on small screen
     const [showFilter, setShowFilter] = useState(false);
-    const [filterProducts, setFilterProducts] = useState([]);
+    
+    //Create category and subCategory array
     const [category, setCategory] = useState([]);
     const [subCategory, setSubCategory] = useState([]);
+    
+    //After filtering, all the filtered pdts will be saved in this array
+    const [filterProducts, setFilterProducts] = useState([]);
     const [sortType, setSortType] = useState('relavent');
     
-    //Create category array
+
+
+    //1)Create category array
     const toggleCategory = (e) => {
         if(category.includes(e.target.value)){
             setCategory(prev => prev.filter(item => item !== e.target.value))
@@ -23,7 +31,7 @@ const Collection = () => {
         }
     }
     
-    //Create subcategory array
+    //2)Create subcategory array
     const toggleSubCategory = (e) => {
         if(subCategory.includes(e.target.value)){
             setSubCategory(prev => prev.filter(item => item!==e.target.value))
@@ -33,9 +41,12 @@ const Collection = () => {
         }
     }
 
-    //Filter Products
+    //3)Function to filter Products
     const applyFilter = () =>{
         let productsCopy = products.slice();
+        
+        //if we type anything on the searchBar then it will display the product
+        //related to searched item
         if(showSearch && search){
             productsCopy=productsCopy.filter(item => item.name.toLowerCase().includes(search.toLowerCase()))
         }
@@ -48,9 +59,10 @@ const Collection = () => {
         setFilterProducts(productsCopy);
     }
 
-    //Sort Products (fpCopy = filterProductsCopy)
+    //4)Sort Products (fpCopy = filterProductsCopy)
+    //Products will be sorted on filtered pdts
     const sortProduct = () => {
-        let fpCopy = filterProducts.slice(); //Products will be sorted on filtered pdts
+        let fpCopy = filterProducts.slice(); 
         switch(sortType){
             case 'low-high':
                 setFilterProducts(fpCopy.sort((a,b) => (a.price - b.price)));
@@ -113,13 +125,11 @@ const Collection = () => {
                         </p>
                     </div>
                 </div>
-
             </div>
 
 
-            {/* 2)RIGHT SIDE */}
+            {/* 2)RIGHT SIDE => PRODUCTS */}
             <div className="flex-1">
-
                 {/* i)Title & Sorting products  */}
                 <div className="flex justify-between text-base sm:text-2xl mb-4">
                     <Title text1={'ALL'} text2={'COLLECTIONS'}/>

@@ -3,14 +3,19 @@ import {ShopContext} from '../context/ShopContext';
 import Title from "./Title";
 import ProductItem from "./ProductItem";
 
+
 const LatestCollection = () => {
     const {products} = useContext(ShopContext);
     const [latestProducts, setLatestProducts] = useState([]);
     
-    //Add 10 products from products array to latestProducts array using useEffect
+
+    //To load all the lastestProducts after reloading the page
+    //Display 10 products from products array to latestProducts array
     useEffect(()=>{
         setLatestProducts(products.slice(0,10));
     }, [products]);
+
+
 
     return(
         <div className="my-10">
@@ -18,7 +23,7 @@ const LatestCollection = () => {
             <div className="text-center py-8 text-3xl ">
                 <Title text1={'LATEST'} text2={'COLLECTIONS'}/>
                 <p className="w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-600">
-                Lorem ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsumhas the most power of logic.
+                    Lorem ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsumhas the most power of logic.
                 </p>
             </div>
 

@@ -1,3 +1,4 @@
+
 import React, {useContext, useEffect, useState} from "react";
 import { useParams } from "react-router-dom";
 import {ShopContext} from '../context/ShopContext';
@@ -6,15 +7,24 @@ import RelatedProducts from "../components/RelatedProducts";
 
 
 const Product = () => {
-    const {productId} = useParams();
+    const {productId} = useParams(); //got from '/product/:productId'
+    //console.log(productId);
     const {products, currency, addToCart} = useContext(ShopContext);
+
+    //product which will be displayed on this page,is saved at productData
+    //state variable,and first image of the pdt at image state variable
     const [productData, setProductData] = useState(false);
     const [image, setImage] = useState('');
+    
+    //If we select any particular size, that will be saved at size state variable
     const [size, setSize] = useState('');
+    
 
+
+    //1)To fetch the Product which will be displayed on this page
     const fetchProductData = async() => {
         products.map((item)=>{
-            if(item._id == productId){
+            if(item._id == productId){ //productId got from page link using useParams hook
                 setProductData(item);
                 setImage(item.image[0]);
                 //console.log(item);
@@ -22,7 +32,9 @@ const Product = () => {
             }
         });
     }
-
+    
+    //Whenever the productId will be updated, we will get the productData
+    //by calling fetchProductData() fn
     useEffect(()=>{
         fetchProductData();
     }, [productId]);
@@ -32,12 +44,14 @@ const Product = () => {
     return productData ? 
         (
         <div className="border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100">
+            {/* 1)PRODUCT SECTION */}
             <div className="flex gap-12 sm:gap-12 flex-col sm:flex-row">
-                {/*Product Images */}
+                {/* i)product Images */}
                 <div className="flex-1 flex flex-col-reverse gap-3 sm:flex-row">
                     <div className="flex sm:flex-col overflow-x-auto sm:overflow-y-scroll justify-between sm:justify-normal sm:w-[18.7%] w-full">
                         {
                             productData.image.map((item,index)=>(
+                                //on whichever image is clicked that img will be saved at image state variable
                                 <img onClick={()=>setImage(item)} src={item} key={index} alt="" className="w-[24%] sm:w-full sm:mb-3 flex-shrink-0 cursor-pointer"/>
                             ))
                         }
@@ -47,7 +61,7 @@ const Product = () => {
                     </div>
                 </div>
 
-                {/*Product Information */}
+                {/* ii)product Information */}
                 <div className="flex-1">
                     <h1 className="font-medium text-2xl mt-2">{productData.name}</h1>
                     <div className="flex items-center gap-1 mt-2">
@@ -63,6 +77,9 @@ const Product = () => {
                     <div className="flex flex-col gap-4 my-8">
                         <p>Select Size</p>
                         <div className="flex gap-2">
+                            {/*All the sizes available for this pdt is displayed
+                            here,If we select any particular size, that will be
+                            saved at size state variable  */}
                             {productData.sizes.map((item,index)=>(
                                 <button onClick={()=>setSize(item)} className={`border py-2 px-4 bg-gray-100 ${item===size? 'border-orange-500': ''}`} key={index}>{item}</button>
                             ))}
@@ -78,7 +95,8 @@ const Product = () => {
                 </div>
             </div>
 
-            {/* Description & Review Section */}
+
+            {/* 2)Description & Review Section */}
             <div className="mt-20">
                 <div className="flex">
                     <b className="border px-5 py-3 text-sm">Description</b>
@@ -90,7 +108,10 @@ const Product = () => {
                 </div>
             </div>
 
-            {/* Display Related Products */}
+
+            {/* 3)Display Related Products
+                related pdts will be displayed here based on this pdt's category
+                and subCategory */}
             <RelatedProducts category={productData.category} subCategory={productData.subCategory} />
 
         </div>

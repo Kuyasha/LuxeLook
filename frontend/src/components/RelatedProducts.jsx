@@ -8,7 +8,9 @@ import ProductItem from './ProductItem';
 const RelatedProducts = ({category, subCategory}) => {
     const {products} = useContext(ShopContext);
     const [related, setRelated] = useState([]);
-
+    
+    //Filter the products using category and subCategory of productData of Product page
+    //Whenever the products will be updated then this fn will be executed
     useEffect(()=>{
         if(products.length > 0){
             let productsCopy = products.slice();
