@@ -1,4 +1,4 @@
-# LuxeLook – Full-Stack E-commerce Clothing Store
+# LuxeLook – FullStack E-commerce Clothing Store
 
 LuxeLook is a modern, scalable full-stack e-commerce application for a clothing brand. Built with React.js, Node.js, Express.js, and MongoDB, the project delivers a seamless shopping experience across devices. The application integrates features like secure user authentication, product filtering, dynamic cart handling, payment processing, and an admin dashboard for complete product and order management.
 
