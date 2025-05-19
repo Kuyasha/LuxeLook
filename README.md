@@ -66,11 +66,11 @@ The frontend is built using React and styled for responsiveness, with state mana
 
 - Cart Functionality
 
-   i)Add, remove, and update product quantities in cart.
+    i)Add, remove, and update product quantities in cart.
 
-   ii)Cart data is persisted using localStorage.
+    ii)Cart data is persisted using localStorage.
 
-   iii)Real-time cart total updates.
+    iii)Real-time cart total updates.
 
 
 
