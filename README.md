@@ -175,6 +175,18 @@ The frontend is built using React and styled for responsiveness, with state mana
 ---
 
 
+## API ENDPOINTS
+
+
+
+
+
+---
+
+## SCREENSHOTS
+
+
+
 
 
 
