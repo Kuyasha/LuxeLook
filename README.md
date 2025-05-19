@@ -26,41 +26,41 @@ The frontend is built using React and styled for responsiveness, with state mana
 
 - Product Catalog
 
-i) Dynamic listing of clothing products with images, descriptions, prices, and bestseller labels.
+     i) Dynamic listing of clothing products with images, descriptions, prices, and bestseller labels.
 
-ii) Products fetched from MongoDB via secure backend APIs.
+    ii) Products fetched from MongoDB via secure backend APIs.
 
 
 
 - Search and Advanced Filtering
 
-i) Keyword-based search.
+    i) Keyword-based search.
 
-ii)Product filtering based on:
+    ii)Product filtering based on:
 
-- Category (e.g., men, women, kids)
+           -- Category (e.g., men, women, kids)
 
-- Type (e.g., shirts, pants, dresses)
+           -- Type (e.g., shirts, pants, dresses)
 
-- Price (e.g., Low to High)
+           -- Price (e.g., Low to High)
 
-- Best Sellers
+           -- Best Sellers
 
 
 
 - Latest Collection Component
 
-i) Highlights newly added products to engage returning customers.
+    i) Highlights newly added products to engage returning customers.
 
 
 
 - Product Details Page
 
-i) Includes detailed product information.
+    i) Includes detailed product information.
 
-ii) Displays related products based on the same category and subcategory/type.
+   ii) Displays related products based on the same category and subcategory/type.
 
-iii) Option to add to cart directly.
+   iii) Option to add to cart directly.
 
 
 
