@@ -66,51 +66,51 @@ The frontend is built using React and styled for responsiveness, with state mana
 
 - Cart Functionality
 
-i)Add, remove, and update product quantities in cart.
+   i)Add, remove, and update product quantities in cart.
 
-ii)Cart data is persisted using localStorage.
+   ii)Cart data is persisted using localStorage.
 
-iii)Real-time cart total updates.
+   iii)Real-time cart total updates.
 
 
 
 - Authentication and Authorization
 
-i)JWT-based user login and registration.
+    i)JWT-based user login and registration.
 
-ii)Secure access to user-specific features (e.g., order history).
+    ii)Secure access to user-specific features (e.g., order history).
 
 
 
 - Checkout & Payment
 
-i) Multiple payment methods:
+    i) Multiple payment methods:
 
-- Cash on Delivery
+         -- Cash on Delivery
 
-- Razorpay
+         -- Razorpay
 
-- Stripe
+         -- Stripe
 
-ii) Real-time payment status updates displayed on order confirmation.
+    ii) Real-time payment status updates displayed on order confirmation.
 
 
 
 - Order History
 
-i) Users can view all their past orders with payment and delivery status.
+    i) Users can view all their past orders with payment and delivery status.
 
 
 
 - Toast Notifications
 
-i) Instant visual feedback for all major actions (e.g., login, add to cart, checkout).
+    i) Instant visual feedback for all major actions (e.g., login, add to cart, checkout).
 
 
 
 - Responsive Design
 
-i) Fully optimized for mobile, tablet, and desktop views.
+   i) Fully optimized for mobile, tablet, and desktop views.
 
 ---
 
@@ -119,79 +119,64 @@ i) Fully optimized for mobile, tablet, and desktop views.
 
 ## 2)Admin Dashboard
 
-Secure Admin Login
+- Secure Admin Login
 
-Admin access protected using JWT authentication.
-
-
-Product Management
-
-Create, edit, and delete products.
-
-Upload product images directly to Cloudinary.
-
-Assign products as “Best Sellers” or “New Collection.”
+    i)Admin access protected using JWT authentication.
 
 
-Order Management
+- Product Management
 
-View all customer orders.
+   i)Create, edit, and delete products.
 
-Update payment and shipping status.
+   ii)Upload product images directly to Cloudinary.
+
+   iii)Assign products as “Best Sellers” or “New Collection.”
 
 
-API-Driven Dashboard
+- Order Management
 
-Admin panel fetches and displays real-time data from backend APIs.
+    i)View all customer orders.
+
+    ii)Update payment and shipping status.
+
+
+- API-Driven Dashboard
+
+    i)Admin panel fetches and displays real-time data from backend APIs.
+
+---
+
+
+
+## 3)State Management
+
+- All global state and business logic (cart, authentication, product filtering, UI feedback) is handled using React Context API.
+
+- Efficient context structure ensures clean, scalable logic management throughout the app.
+
+
+
+
+
 
 
 
 
 ---
 
-State Management
+## Tech Stack
 
-All global state and business logic (cart, authentication, product filtering, UI feedback) is handled using React Context API.
+- Frontend : React.js ,React Router , Axios, Tailwind CSS (or CSS Modules), React Context API, Toast notifications (e.g., react-toastify)
 
-Efficient context structure ensures clean, scalable logic management throughout the app.
+- Backend : Node.js, Express.js, MongoDB & Mongoose, JSON Web Token (JWT), Bcrypt.js, Stripe & Razorpay Payment Integration, Cloudinary for image hosting
 
-
-
----
-
-Tech Stack
-
-Frontend
-
-React.js
-
-React Router
-
-Axios
-
-Tailwind CSS (or CSS Modules)
-
-React Context API
-
-Toast notifications (e.g., react-toastify)
-
-Vercel for deployment
-
-
-Backend
-
-Node.js
-
-Express.js
-
-MongoDB & Mongoose
-
-JSON Web Token (JWT)
-
-Bcrypt.js
-
-Stripe & Razorpay Payment Integration
-
-Cloudinary for image hosting
+- Deployment : Vercel
 
 ---
+
+
+
+
+
+
+
