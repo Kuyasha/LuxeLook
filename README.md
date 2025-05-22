@@ -116,7 +116,6 @@ The frontend is built using React and styled for responsiveness, with state mana
 
 
 
-
 ## 2)Admin Dashboard
 
 - Secure Admin Login
@@ -175,8 +174,68 @@ The frontend is built using React and styled for responsiveness, with state mana
 ---
 
 
+
+
+
+
+
 ## API ENDPOINTS
 
+- User APIs
+
+    localhost:4000/api/user/register => for user registration
+  
+    localhost:4000/api/user/login => for user login
+  
+    localhost:4000/api/user/admin => for admin login
+  
+
+- Product APIs
+
+     localhost:4000/api/product/add
+
+     localhost:4000/api/product/remove
+
+     localhost:4000/api/product/list
+
+     localhost:4000/api/product/single
+
+
+- Cart APIs
+
+     localhost:4000/api/cart/add
+  
+     localhost:4000/api/cart/update
+
+     localhost:4000/api/cart/get
+
+
+- Order APIs
+
+     localhost:4000/api/order/list
+  
+     localhost:4000/api/order/status
+
+     localhost:4000/api/order/userorders
+
+
+ - All Order APIs Related to Payment
+
+     localhost:4000/api/order/place => For COD
+  
+     localhost:4000/api/order/stripe => For Stripe Payment
+
+     localhost:4000/api/order/razorpay => For Razorpay Payment
+
+     localhost:4000/api/order/verifyStripe
+
+     localhost:4000/api/order/verifyRazorpay
+
+     
+
+    
+
+  
 
 
 
