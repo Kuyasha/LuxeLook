@@ -11,7 +11,7 @@ orderRouter.post('/list', adminAuth, allOrders); //all orders data from admin
 orderRouter.post('/status', adminAuth, updateStatus); //to update order status from admin
 
 //Payment Features For User
-orderRouter.post('/place', authUser, placeOrder);
+orderRouter.post('/place', authUser, placeOrder); //For COD
 orderRouter.post('/stripe', authUser, placeOrderStripe);
 orderRouter.post('/razorpay', authUser, placeOrderRazorpay);
 
