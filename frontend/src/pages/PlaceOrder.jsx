@@ -9,9 +9,11 @@ import { toast } from "react-toastify";
 
 
 const PlaceOrder = () => {
-    const [method, setMethod] = useState('cod');
+    //Extracting from ShopContext
     const {navigate, backendUrl, token, cartItems, setCartItems, getCartAmount, delivery_fee, products} = useContext(ShopContext);
-
+    
+    //Creating state variables
+    const [method, setMethod] = useState('cod');
     const [formData, setFormData] = useState({
         firstName:'',
         lastName:'',
@@ -23,7 +25,9 @@ const PlaceOrder = () => {
         country:'',
         phone:''
     });
+    
 
+    //1)ON CHANGE HANDLER Fn
     const onChangeHandler = (event) =>{
         const name= event.target.name;
         const value= event.target.value;
@@ -32,7 +36,8 @@ const PlaceOrder = () => {
     }
 
 
-    //Creating For Razorpay Payment
+    //2)Creating For Razorpay Payment
+    //Take the order details and execute razorpay payment
     const initPay = (order) =>{
         const options = {
             key: import.meta.env.VITE_RAZORPAY_KEY_ID,
@@ -61,7 +66,9 @@ const PlaceOrder = () => {
         rzp.open();
     }
 
-    //ON SUBMIT HANDLER FN
+
+
+    //3)ON SUBMIT HANDLER FN
     const onSubmitHandler = async(event) =>{
         event.preventDefault();
         try{
@@ -87,7 +94,8 @@ const PlaceOrder = () => {
                 items: orderItems,
                 amount: getCartAmount() + delivery_fee
             }
-
+            
+            //API Calls
             switch(method){
                 //API Calls For COD
                 case 'cod':

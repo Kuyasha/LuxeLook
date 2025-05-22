@@ -7,12 +7,14 @@ import axios from "axios";
 
 const Verify = () =>{
     const {navigate, token, setCartItems, backendUrl} = useContext(ShopContext);
+    
+    //useSearchParams() hook from 'react-router-dom'
     const [searchParams, setSearchParams] = useSearchParams();
 
     const success = searchParams.get('success');
     const orderId = searchParams.get('orderId');
 
-    const VerifyPayment = async () =>{
+    const VerifyPayment = async () => {
         try{
             if(!token){
                 return null;

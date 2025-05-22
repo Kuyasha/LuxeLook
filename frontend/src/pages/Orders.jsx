@@ -28,7 +28,7 @@ const Orders = () => {
                     })
                 });
                 //console.log(allOrdersItem);
-                setorderData(allOrdersItem);
+                setorderData(allOrdersItem.reverse());//to display the latest order at the top
             }
         }
         catch(error){

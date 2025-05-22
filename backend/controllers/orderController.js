@@ -4,13 +4,16 @@ import Stripe from 'stripe'; //here Stripe should be capital
 import razorpay from 'razorpay';
 
 
-//global variables
+//Global Variables
 const currency = 'inr';
 const deliveryCharge = 10;
 
-//gateway initialize
+
+//Gateway Initialize
+//i)use stripe_secret_key to create the instance of stripe
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
+//ii)use RAZORPAY_KEY_ID & RAZORPAY_KEY_SECRET to create the instance of razorpay  
 const razorpayInstance = new razorpay({
     key_id: process.env.RAZORPAY_KEY_ID,
     key_secret: process.env.RAZORPAY_KEY_SECRET,
@@ -94,8 +97,11 @@ const updateStatus = async (req, res) => {
 //5)PLACING ORDERS USING STRIPE (FRONTEND)
 const placeOrderStripe = async (req, res) => {
     try {
+        //i)Extract all these
         const { userId, items, amount, address } = req.body;
         const { origin } = req.headers; //whenever create any req,then in the header origin property will be created which includes frontend url
+        
+        //ii)orderData obj is created
         const orderData = {
             userId,
             items,
@@ -105,9 +111,12 @@ const placeOrderStripe = async (req, res) => {
             payment: false,
             date: Date.now()
         }
+        
+        //iii)Save new order with orderData at 'order' collection in database
         const newOrder = new orderModel(orderData);
         await newOrder.save();
-
+        
+        //iv)Create line_items using that we can execute Stripe payments
         const line_items = items.map((item) => ({
             price_data: {
                 currency: currency,
@@ -118,7 +127,6 @@ const placeOrderStripe = async (req, res) => {
             },
             quantity: item.quantity
         }));
-
         line_items.push({
             price_data: {
                 currency: currency,
@@ -130,7 +138,9 @@ const placeOrderStripe = async (req, res) => {
             quantity: 1
         })
 
-        //create new session
+        //v)Create new session using the line_items
+        //if the payment successful,then redirect to the success page
+        //if the payment fails,then redirect to cancel url
         const session = await stripe.checkout.sessions.create({
             success_url: `${origin}/verify?success=true&orderId=${newOrder._id}`,
             cancel_url: `${origin}/verify?success=false&orderId=${newOrder._id}`,
@@ -146,7 +156,7 @@ const placeOrderStripe = async (req, res) => {
     }
 }
 
-//6)VERIFY STRIPE (FRONTEND)
+//6)VERIFY STRIPE (FRONTEND) (To Verify the Payment)
 const verifyStripe = async (req, res) => {
     const { orderId, success, userId } = req.body;
     try {
@@ -170,7 +180,9 @@ const verifyStripe = async (req, res) => {
 //7)PLACING ORDERS USING RAZORPAY (FRONTEND)
 const placeOrderRazorpay = async (req, res) => {
     try {
+        //i)Extract all these
         const { userId, items, amount, address } = req.body;
+        //ii)orderData obj is created
         const orderData = {
             userId,
             items,
@@ -180,18 +192,19 @@ const placeOrderRazorpay = async (req, res) => {
             payment: false,
             date: Date.now()
         }
+        //iii)Save new order with orderData at 'order' collection in database
         const newOrder = new orderModel(orderData);
         await newOrder.save();
-
+        //iv)create options
         const options = {
-            amount: amount * 100,
+            amount: amount * 100, //getting this from req.body
             currency: currency.toUpperCase(), //for razorpay currency is in uppercase
             receipt: newOrder._id.toString(),
         }
-
+        //v)Create razorpay payment using options
         await razorpayInstance.orders.create(options, (error, order) => {
             if (error) {
-                console.log(error);
+                //console.log(error);
                 return res.json({ success: false, message: error });
             }
             res.json({ success: true, order });
@@ -208,8 +221,11 @@ const placeOrderRazorpay = async (req, res) => {
 const verifyRazorpay = async (req, res) => {
     try {
         const { userId, razorpay_order_id } = req.body;
+
+        //lets find the order details from the razorpay_order_id
         const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id);
         //console.log(orderInfo);
+
         if(orderInfo.status === 'paid'){
             await orderModel.findByIdAndUpdate(orderInfo.receipt, {payment:true}); //inside receipt id is saved
             await userModel.findByIdAndUpdate(userId, {cartData:{}}); //clear the user cart data
